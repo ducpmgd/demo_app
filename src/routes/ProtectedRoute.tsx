@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import Header from "../pages/layout/Header";
 
 const ProtectedRoute = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const ProtectedRoute = () => {
   if(!isLogin) return null
   return (
     <div>
+      <Header/>
       <Outlet />
     </div>
   );
