@@ -17,7 +17,9 @@ const ProtectedRoute = () => {
   return (
     <div>
       <Header/>
+      <div className="pt-4">
       <Outlet />
+      </div>
     </div>
   );
 };
