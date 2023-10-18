@@ -6,7 +6,7 @@ import axios from 'axios'
 // const localStorageService = LocalStorageService.getService()
 
 const axiosInstance = axios.create({
-    baseURL: "https://652df663f9afa8ef4b27ebce.mockapi.io",
+    baseURL: "https://dummyjson.com",
     headers: {
         "content-type": "application/json",
       },

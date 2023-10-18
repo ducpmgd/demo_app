@@ -12,7 +12,7 @@ const CardItem: React.FC<ICardItemProps> = (props: ICardItemProps) => {
     <div key={product.id} className="group relative">
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
         <img
-          src={product.image}
+          src={product.thumbnail}
           alt=""
           className="h-full w-full object-cover object-center lg:h-full lg:w-full"
         />
@@ -22,7 +22,7 @@ const CardItem: React.FC<ICardItemProps> = (props: ICardItemProps) => {
           <h3 className="text-sm text-gray-700">
             <NavLink to={`/product/${product.id}`}>
               <span aria-hidden="true" className="absolute inset-0" />
-              {product.name}
+              {product.title}
             </NavLink>
           </h3>
         </div>

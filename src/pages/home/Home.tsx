@@ -1,7 +1,7 @@
 import CardItem from "components/cardItem/CardItem";
 import { ICardItem } from "components/cardItem/interface";
 import { ChangeEvent, useEffect, useState } from "react";
-import { getListProduct } from "services/products";
+import { getListProduct, searchProduct } from "services/products";
 import { debounce } from "utils/debounce";
 import Pagination from "../../components/pagination/Pagination";
 import FilterForm from "./FilterForm";
@@ -11,26 +11,38 @@ export const Home = () => {
   const [filters, setFilters] = useState({
     search: "",
     sort: "",
-    
   });
+  const [currentPage, setCurrentPage] = useState(1)
+  const [limit, setLimit] = useState(10)
+  const [totalPages, setTotalPages] = useState<number>()
 
   const handleFetchData = async () => {
-    const res = await getListProduct({ search: filters.search });
+    const res = await getListProduct({
+      search: filters.search, page: currentPage,
+      limit
+    });
     if (res) {
-      setProducts(res);
+      setTotalPages(Math.ceil(res.total / res.limit))
+      setProducts(res.products);
     }
   };
 
-  const handleSearch = debounce((e: ChangeEvent<HTMLInputElement>) => {
-    setFilters({
-      ...filters,
-      search: e.target.value,
+  const handleSearch = debounce(async(e: ChangeEvent<HTMLInputElement>) => {
+    const res = await searchProduct({
+      q: e.target.value, 
+      skip: (currentPage - 1) * limit,
+      limit
     });
+    if (res) {
+      setTotalPages(Math.ceil(res.total / res.limit))
+      setProducts(res.products);
+    }
   }, 500);
 
   useEffect(() => {
     handleFetchData();
   }, [filters.search]);
+
   return (
     <div className="container mx-auto px-4 bg-white">
       <FilterForm handleSearch={handleSearch} />
@@ -45,7 +57,7 @@ export const Home = () => {
           ))}
         </div>
       </div>
-      <Pagination />
+      <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} limit={limit} />
     </div>
   );
 };

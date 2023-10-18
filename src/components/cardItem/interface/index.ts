@@ -1,7 +1,8 @@
 export interface ICardItem {
   createdAt: string;
-  name: string;
-  image: string;
+  title: string;
+  images: string[];
+  thumbnail:string;
   description: string;
   price: string;
   material: string;
