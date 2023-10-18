@@ -1,22 +1,27 @@
-import React from "react";
+import React, { FormEvent, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "services/auth";
 
 const Login = () => {
+
   const navigate = useNavigate()
+  const userNameRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
   const handleLogin = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e: FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    const { username, password } = document.forms[0];
-    const res = await login(
-      JSON.stringify({ username: username.value, password: password.value })
-    );
-    if(res && res.token){
-      localStorage.setItem("auth", JSON.stringify({username:res.username,token:res.token }))
-      navigate('/')
+    if (userNameRef.current && passwordRef.current) {
+      const res = await login(
+        JSON.stringify({ username: userNameRef.current.value, password: passwordRef.current.value })
+      );
+      if (res && res.token) {
+        localStorage.setItem("auth", JSON.stringify({ username: res.username, token: res.token }))
+        navigate('/')
+      }
     }
-    console.log(res);
+
   };
   return (
     <div>
@@ -33,7 +38,7 @@ const Login = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleLogin}>
             <div>
               <label
                 htmlFor="username"
@@ -43,6 +48,7 @@ const Login = () => {
               </label>
               <div className="mt-2">
                 <input
+                  ref={userNameRef}
                   id="username"
                   name="username"
                   autoComplete="username"
@@ -63,6 +69,7 @@ const Login = () => {
               </div>
               <div className="mt-2">
                 <input
+                  ref={passwordRef}
                   id="password"
                   name="password"
                   type="password"
@@ -75,7 +82,6 @@ const Login = () => {
 
             <div>
               <button
-                onClick={(e) => handleLogin(e)}
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
