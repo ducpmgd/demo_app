@@ -1,9 +1,4 @@
-import axios from 'axios'
-// import LocalStorageService from './services/storage/localstorageservice'
-// import router from './router/router'
-
-// LocalStorageService
-// const localStorageService = LocalStorageService.getService()
+import axios from "axios";
 
 const axiosInstance = axios.create({
     baseURL: "https://dummyjson.com",
@@ -15,11 +10,12 @@ const axiosInstance = axios.create({
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
   config => {
-    // const token = localStorageService.getAccessToken()
-    // if (token) {
-    //   config.headers['Authorization'] = 'Bearer ' + token
-    // }
-    // config.headers['Content-Type'] = 'application/json';
+    if(localStorage.getItem("auth")){
+      const token = JSON.parse(localStorage.getItem("auth")||"").token
+      if(token){
+        config.headers['Authorization'] = 'Bearer ' + token
+      }
+    }
     return config
   },
   error => {
@@ -32,6 +28,7 @@ axiosInstance.interceptors.response.use(
       return response.data
     },
     function (error) {
+      window.alert(error.response.data.message)
       return Promise.reject(error)
     }
   )

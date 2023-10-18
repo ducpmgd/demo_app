@@ -1,6 +1,23 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "services/auth";
 
 const Login = () => {
+  const navigate = useNavigate()
+  const handleLogin = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    const { username, password } = document.forms[0];
+    const res = await login(
+      JSON.stringify({ username: username.value, password: password.value })
+    );
+    if(res && res.token){
+      localStorage.setItem("auth", JSON.stringify({username:res.username,token:res.token }))
+      navigate('/')
+    }
+    console.log(res);
+  };
   return (
     <div>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -19,17 +36,16 @@ const Login = () => {
           <form className="space-y-6" action="#" method="POST">
             <div>
               <label
-                htmlFor="email"
+                htmlFor="username"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Email address
+                User Name
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
+                  id="username"
+                  name="username"
+                  autoComplete="username"
                   required
                   className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -59,6 +75,7 @@ const Login = () => {
 
             <div>
               <button
+                onClick={(e) => handleLogin(e)}
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >

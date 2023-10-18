@@ -10,7 +10,7 @@ const CardItem: React.FC<ICardItemProps> = (props: ICardItemProps) => {
   const { product } = props;
   return (
     <div key={product.id} className="group relative">
-      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 h-60 xl:h-80 lg:h-80 md:h-60 sm:h-60  ">
         <img
           src={product.thumbnail}
           alt=""

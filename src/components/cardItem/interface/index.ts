@@ -7,4 +7,5 @@ export interface ICardItem {
   price: string;
   material: string;
   id: string;
+  brand:string;
 }

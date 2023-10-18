@@ -1,10 +1,15 @@
 import { ChangeEvent } from "react";
+import { SORT_BY } from "utils/constant";
 
 interface FilterFormProps {
   handleSearch: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeSort:(e:ChangeEvent<HTMLSelectElement>)=>void;
+  sorted: string
 }
 const FilterForm = (props: FilterFormProps) => {
-  const { handleSearch } = props;
+
+  const { handleSearch, onChangeSort, sorted } = props;
+
   return (
     <div className="flex justify-between items-center">
       <div className="w-2/4">
@@ -30,14 +35,18 @@ const FilterForm = (props: FilterFormProps) => {
           Sort By
         </label>
         <select
+          value={sorted}
+          onChange={(e:ChangeEvent<HTMLSelectElement>) => onChangeSort(e)}
           id="sorts"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         >
-          <option selected>Choose a country</option>
-          <option value="US">United States</option>
-          <option value="CA">Canada</option>
-          <option value="FR">France</option>
-          <option value="DE">Germany</option>
+          {SORT_BY.map((item) => {
+            return (
+              <option key={item.value} value={item.value}>
+                {item.label}
+              </option>
+            );
+          })}
         </select>
       </div>
     </div>
