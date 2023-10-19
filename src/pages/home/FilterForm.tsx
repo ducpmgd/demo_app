@@ -11,7 +11,7 @@ const FilterForm = (props: FilterFormProps) => {
   const { handleSearch, onChangeSort, sorted } = props;
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="sm:block md:flex lg:flex xl:flex 2xl:flex justify-between items-center ">
       <div className="w-2/4">
         <label
           htmlFor="search"
@@ -27,7 +27,7 @@ const FilterForm = (props: FilterFormProps) => {
           placeholder="Search"
         />
       </div>
-      <div className="w-1/4">
+      <div className="sm:w-2/4 md:w-1/4 lg:w-1/4 xl:w-1/4 2xl:w-1/4 w-2/4">
         <label
           htmlFor="sort"
           className="block mb-2 text-sm font-medium text-gray-90"
