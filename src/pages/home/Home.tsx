@@ -127,7 +127,7 @@ export const Home = () => {
             </>
           ) : (
             <div className="text-2xl font-bold tracking-tight text-gray-900 text-center mt-40">
-              No Product
+              No Product Found
             </div>
           )}
         </>
