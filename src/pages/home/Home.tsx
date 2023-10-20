@@ -44,7 +44,7 @@ export const Home = () => {
   const handleSearch = debounce(async (e: ChangeEvent<HTMLInputElement>) => {
     setFilters((prev) => ({
       ...prev,
-      search: e.target.value,
+      search: e.target.value.trim(),
     }));
     setCurrentPage(1);
   }, 500);
